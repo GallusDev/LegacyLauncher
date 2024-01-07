@@ -1,4 +1,5 @@
 import javafx.application.Application
+import javafx.geometry.Insets
 import javafx.geometry.Pos
 import javafx.scene.Scene
 import javafx.scene.control.*
@@ -8,9 +9,6 @@ import javafx.scene.layout.*
 import javafx.scene.paint.Color
 import javafx.stage.Stage
 import javafx.stage.StageStyle
-import java.util.*
-import kotlin.concurrent.schedule
-import kotlin.system.exitProcess
 
 class App : Application(){
     override fun start(primaryStage: Stage) {
@@ -51,11 +49,44 @@ class App : Application(){
         // Logo
         val logoImage = Image(javaClass.getResourceAsStream("/images/logo.png"))
         val logo = ImageView(logoImage)
+        logo.fitWidth = logoImage.width * 0.75
+        logo.fitHeight = logoImage.height * 0.75
+
+        // Create an HBox for the buttons and set alignment to Pos.CENTER_RIGHT
+        val buttonsBox = HBox(20.0) // Spacing between buttons
+        buttonsBox.alignment = Pos.CENTER
+        buttonsBox.padding = Insets(0.0, 15.0, 0.0, 0.0) // Add right padding
 
         // Buttons
         val launchButton = Button("Launch Game")
         val updateButton = Button("Check for Updates")
-        val exitButton = Button("Exit")
+
+        // Styling for the buttons with hover effect
+        val launchButtonStyle = """
+    -fx-min-width: 150px;
+    -fx-min-height: 50px;
+    -fx-background-color: #14A819;
+    -fx-font-weight: bold;
+    -fx-text-fill: white;
+"""
+        val updateButtonStyle = """
+    -fx-min-width: 150px;
+    -fx-min-height: 50px;
+    -fx-background-color: #D49C1C;
+    -fx-font-weight: bold;
+    -fx-text-fill: white;
+"""
+
+        val launchButtonHoverStyle = "-fx-background-color: #0F8A11;" // Slightly lighter color on hover
+        val updateButtonHoverStyle = "-fx-background-color: #BB8415;" // Slightly lighter color on hover
+
+        launchButton.style = launchButtonStyle
+        launchButton.setOnMouseEntered { launchButton.style = "$launchButtonStyle$launchButtonHoverStyle" }
+        launchButton.setOnMouseExited { launchButton.style = launchButtonStyle }
+
+        updateButton.style = updateButtonStyle
+        updateButton.setOnMouseEntered { updateButton.style = "$updateButtonStyle$updateButtonHoverStyle" }
+        updateButton.setOnMouseExited { updateButton.style = updateButtonStyle }
 
         // Progress Indicator
         val progressIndicator = ProgressIndicator()
@@ -66,8 +97,11 @@ class App : Application(){
         informationPanel.isEditable = false
         informationPanel.text = "Welcome to the Launcher.\n"
 
+        // Add buttons to the HBox
+        buttonsBox.children.addAll(updateButton, launchButton)
+
         // Add UI elements to the VBox
-        vBox.children.addAll(progressIndicator, logo, launchButton, updateButton, exitButton, informationPanel)
+        vBox.children.addAll(progressIndicator, logo, buttonsBox, informationPanel)
 
         // Add the VBox to the content area
         root.center = vBox
@@ -102,13 +136,11 @@ class App : Application(){
         // Set actions for buttons (you can implement these functions)
         launchButton.setOnAction { launchGame(informationPanel) }
         updateButton.setOnAction { checkForUpdates(progressIndicator, informationPanel) }
-        exitButton.setOnAction { exitGame() }
     }
 
     // Implement these functions for button actions
     private fun launchGame(informationPanel: TextArea) {
         informationPanel.appendText("Launching client...\n")
-        Timer("PauseTimer", false).schedule(2000) {}
 
         // Launch the client and check the return value
         if (!clientLauncher.launchClient()) {
@@ -121,10 +153,6 @@ class App : Application(){
         progressIndicator.isVisible = true
         versionChecker.checkGameVersions(progressIndicator, informationPanel)
         progressIndicator.isVisible = false
-    }
-
-    private fun exitGame() {
-        exitProcess(0)
     }
 
     private fun displayNoClientFiles() {
