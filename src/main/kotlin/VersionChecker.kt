@@ -98,6 +98,7 @@ class VersionChecker {
             storedClientVersion = storedVersions.second
         } else {
             // No stored versions found, update files and create settings file
+            informationPanel.style = textColorRed
             informationPanel.appendText("Unable to verify file versions. Updating files...\n")
             fileDownloader.downloadClientAndCache(progressIndicator, informationPanel)
             createSettingsFile(liveCacheVersion, liveClientVersion)
@@ -106,6 +107,7 @@ class VersionChecker {
         // Check cache version
         if (liveCacheVersion != 0) {
             if (storedCacheVersion != liveCacheVersion) {
+                informationPanel.style = textColorOrange
                 informationPanel.appendText("Cache version update in progress. Please wait...\n")
                 fileDownloader.downloadAndExtractCacheFiles(
                     cacheDownloadUrl,
@@ -114,15 +116,18 @@ class VersionChecker {
                     informationPanel
                 )
             } else {
+                informationPanel.style = textColorGreen
                 informationPanel.appendText("Cache verified.\n")
             }
         } else {
+            informationPanel.style = textColorRed
             informationPanel.appendText("Unable to obtain cache version. Please contact an admin.")
         }
 
         // Check client version
         if (liveClientVersion != 0) {
             if (storedClientVersion != liveClientVersion) {
+                informationPanel.style = textColorOrange
                 informationPanel.appendText("Client version update in progress. Please wait...\n")
                 fileDownloader.downloadAndExtractClientFiles(
                     clientDownloadUrl,
@@ -131,14 +136,17 @@ class VersionChecker {
                     informationPanel
                 )
             } else {
+                informationPanel.style = textColorGreen
                 informationPanel.appendText("Client verified.\n")
             }
         } else {
+            informationPanel.style = textColorRed
             informationPanel.appendText("Unable to obtain client version. Please contact an admin.")
         }
 
         updateSettingsFile(newCacheVersion = liveCacheVersion)
         updateSettingsFile(newClientVersion = liveClientVersion)
+        informationPanel.style = textColorGreen
         informationPanel.appendText("All files are up to date.\n")
     }
 

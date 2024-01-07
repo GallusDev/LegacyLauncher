@@ -61,25 +61,6 @@ class App : Application(){
         val launchButton = Button("Launch Game")
         val updateButton = Button("Check for Updates")
 
-        // Styling for the buttons with hover effect
-        val launchButtonStyle = """
-    -fx-min-width: 150px;
-    -fx-min-height: 50px;
-    -fx-background-color: #14A819;
-    -fx-font-weight: bold;
-    -fx-text-fill: white;
-"""
-        val updateButtonStyle = """
-    -fx-min-width: 150px;
-    -fx-min-height: 50px;
-    -fx-background-color: #D49C1C;
-    -fx-font-weight: bold;
-    -fx-text-fill: white;
-"""
-
-        val launchButtonHoverStyle = "-fx-background-color: #0F8A11;" // Slightly lighter color on hover
-        val updateButtonHoverStyle = "-fx-background-color: #BB8415;" // Slightly lighter color on hover
-
         launchButton.style = launchButtonStyle
         launchButton.setOnMouseEntered { launchButton.style = "$launchButtonStyle$launchButtonHoverStyle" }
         launchButton.setOnMouseExited { launchButton.style = launchButtonStyle }
@@ -95,6 +76,7 @@ class App : Application(){
         // Information Panel
         val informationPanel = TextArea()
         informationPanel.isEditable = false
+        informationPanel.style = textColorGreen
         informationPanel.text = "Welcome to the Launcher.\n"
 
         // Add buttons to the HBox
@@ -135,10 +117,12 @@ class App : Application(){
 
         // Set actions for buttons (you can implement these functions)
         launchButton.setOnAction {
+            informationPanel.style = textColorGreen
             informationPanel.appendText("Launching client...\n")
             launchGame()
         }
         updateButton.setOnAction {
+            informationPanel.style = textColorOrange
             informationPanel.appendText("Checking for updates. Please wait...\n")
             checkForUpdates(progressIndicator, informationPanel)
         }

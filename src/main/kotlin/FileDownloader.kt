@@ -19,6 +19,7 @@ class FileDownloader {
 
     fun downloadClientAndCache(progressIndicator: ProgressIndicator, informationPanel: TextArea) {
         // Update the informationPanel
+        informationPanel.style = textColorOrange
         informationPanel.appendText("Downloading game files...\n")
 
         // Download and extract the cache files
@@ -30,6 +31,7 @@ class FileDownloader {
     @Throws(IOException::class)
     fun downloadAndExtractClientFiles(downloadUrl: String, destinationDir: String, progressIndicator: ProgressIndicator, informationPanel: TextArea) {
         // Update the informationPanel
+        informationPanel.style = textColorOrange
         informationPanel.appendText("Obtaining Client files...\n")
 
         val zipFile = downloadFile(downloadUrl, progressIndicator)
@@ -44,6 +46,7 @@ class FileDownloader {
     @Throws(IOException::class)
     fun downloadAndExtractCacheFiles(downloadUrl: String, destinationDir: String, progressIndicator: ProgressIndicator, informationPanel: TextArea) {
         // Update the informationPanel
+        informationPanel.style = textColorOrange
         informationPanel.appendText("Obtaining Cache files...\n")
 
         val zipFile = downloadFile(downloadUrl, progressIndicator)
