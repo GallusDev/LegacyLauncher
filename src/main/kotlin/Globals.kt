@@ -1,8 +1,8 @@
 import javafx.scene.paint.Color
 import java.io.File
 
-val serverName = "RuneLegacy"
-val backgroundColor = Color.rgb(53, 53, 53)
+const val serverName = "RuneLegacy"
+val backgroundColor: Color = Color.rgb(53, 53, 53)
 
 // New
 val clientLauncher = ClientLaunch()
@@ -15,8 +15,8 @@ val cacheDirectory = File(System.getProperty("user.home") + "/.rlegacy2/cache")
 val outputDirectory = File(System.getProperty("user.home") + "/.rlegacy2")
 val rtJar = File(clientDirectory, "rt.jar")
 
-val cacheVersionUrl = "https://runelegacy.org/version-test/api/1.1/wf/cache_version"
-val clientVersionUrl = "https://runelegacy.org/version-test/api/1.1/wf/client_version"
+const val cacheVersionUrl = "https://runelegacy.org/version-test/api/1.1/wf/cache_version"
+const val clientVersionUrl = "https://runelegacy.org/version-test/api/1.1/wf/client_version"
 
-val cacheDownloadUrl = "https://www.runelegacy.org/testcache"
-val clientDownloadUrl = "https://www.runelegacy.org/testclient"
+const val cacheDownloadUrl = "https://www.runelegacy.org/testcache"
+const val clientDownloadUrl = "https://www.runelegacy.org/testclient"

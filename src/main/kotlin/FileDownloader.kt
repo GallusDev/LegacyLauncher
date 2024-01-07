@@ -98,10 +98,10 @@ class FileDownloader {
         // Get the response entity
         val entity = response.entity
 
-        // Exctract the file name from the URL
+        // Extract the file name from the URL
         val fileName = url.substring(url.lastIndexOf('/') + 1)
 
-        // Ensure that the file name has the .zip exension
+        // Ensure that the file name has the .zip extension
         val fileNameWithExtension = if (!fileName.endsWith(".zip")) {
             "$fileName.zip"
         } else {
@@ -120,7 +120,7 @@ class FileDownloader {
         // Calculate the content length from the response headers
         val contentLength = entity.contentLength.toDouble()
 
-        // Definte a buffer for reading data
+        // Define a buffer for reading data
         val buffer = ByteArray(1024 * 1024) // 1MB buffer size
 
         var bytesRead: Int

@@ -14,7 +14,7 @@ class ClientLaunch {
             return false
         }
 
-        try {
+        return try {
             // Construct the classpath to include both client.jar and rt.jar
             val classpath = "${clientJar.absolutePath}${File.pathSeparator}${rtJar.absolutePath}"
 
@@ -24,10 +24,10 @@ class ClientLaunch {
             val process = builder.start()
 
             // Check if the process started successfully
-            return process.isAlive
+            process.isAlive
         } catch (e: IOException) {
             e.printStackTrace()
-            return false
+            false
         }
     }
 

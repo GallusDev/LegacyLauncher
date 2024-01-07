@@ -10,45 +10,43 @@ import javafx.stage.Stage
 import javafx.stage.StageStyle
 import java.util.*
 import kotlin.concurrent.schedule
+import kotlin.system.exitProcess
 
 class App : Application(){
-    private var xOffset = 0.0
-    private var yOffset = 0.0
-
     override fun start(primaryStage: Stage) {
         // Create the content area
         val root = BorderPane()
-        root.setStyle("-fx-background-color: ${toHex(backgroundColor)};") // White content background
+        root.style = "-fx-background-color: ${toHex(backgroundColor)};" // White content background
 
         // Create a custom title bar
         val titleBar = HBox()
-        titleBar.setAlignment(Pos.CENTER_RIGHT)
-        titleBar.setStyle("-fx-background-color: #333; -fx-padding: 5px;") // Gray title bar
+        titleBar.alignment = Pos.CENTER_RIGHT
+        titleBar.style = "-fx-background-color: #333; -fx-padding: 5px;" // Gray title bar
 
         // Minimize button
         val minimizeButton = Button("—")
         minimizeButton.setOnAction { primaryStage.isIconified = true } // Minimize button action
-        minimizeButton.setStyle("-fx-background-color: transparent; -fx-text-fill: white;")
+        minimizeButton.style = "-fx-background-color: transparent; -fx-text-fill: white;"
 
         // Close button
         val closeButton = Button("✕")
         closeButton.setOnAction { primaryStage.close() } // Close button action
-        closeButton.setStyle("-fx-background-color: transparent; -fx-text-fill: white;")
+        closeButton.style = "-fx-background-color: transparent; -fx-text-fill: white;"
 
         // Add title text to the title bar
         val titleText = Label("$serverName Launcher")
-        titleText.setStyle("-fx-text-fill: white; -fx-font-size: 16px; -fx-padding: 0 10px;") // Customize text style
+        titleText.style = "-fx-text-fill: white; -fx-font-size: 16px; -fx-padding: 0 10px;" // Customize text style
 
         // Create a spacer to push the buttons to the right
         val spacer = Region()
         HBox.setHgrow(spacer, Priority.ALWAYS)
 
         // Add buttons to the title bar
-        titleBar.getChildren().addAll(titleText, spacer, minimizeButton, closeButton)
+        titleBar.children.addAll(titleText, spacer, minimizeButton, closeButton)
 
         // Create a VBox to hold the UI elements
         val vBox = VBox(20.0) // Spacing between elements
-        vBox.setAlignment(Pos.CENTER)
+        vBox.alignment = Pos.CENTER
 
         // Logo
         val logoImage = Image(javaClass.getResourceAsStream("/images/logo.png"))
@@ -72,10 +70,10 @@ class App : Application(){
         vBox.children.addAll(progressIndicator, logo, launchButton, updateButton, exitButton, informationPanel)
 
         // Add the VBox to the content area
-        root.setCenter(vBox)
+        root.center = vBox
 
         // Add the title bar to the top of the BorderPane
-        root.setTop(titleBar)
+        root.top = titleBar
 
         // Create the scene
         val scene = Scene(root, 600.0, 400.0)
@@ -126,7 +124,7 @@ class App : Application(){
     }
 
     private fun exitGame() {
-        System.exit(0)
+        exitProcess(0)
     }
 
     private fun displayNoClientFiles() {
@@ -137,7 +135,7 @@ class App : Application(){
         alert.showAndWait()
     }
 
-    fun toHex(color: Color): String {
+    private fun toHex(color: Color): String {
         return String.format("#%02X%02X%02X",
             (color.red * 255).toInt(),
             (color.green * 255).toInt(),

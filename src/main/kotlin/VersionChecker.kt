@@ -20,7 +20,7 @@ class VersionChecker {
      * @return A Pair containing the cache version and client version if successfully read from the file,
      *         or null if the file does not exist or the versions cannot be parsed.
      */
-    fun readSettingsFile(): Pair<Int, Int>? {
+    private fun readSettingsFile(): Pair<Int, Int>? {
         // Create a Properties object to hold the settings
         val properties = Properties()
 
@@ -75,16 +75,16 @@ class VersionChecker {
         }
 
         // Declare stored versions
-        var storedCacheVersion: Int = 0
-        var storedClientVersion: Int = 0
+        var storedCacheVersion = 0
+        var storedClientVersion = 0
 
         // Declare live versions and initialize them to 0
         var liveCacheVersion = 0
         var liveClientVersion = 0
 
         // Retrieve live versions from external sources
-        val liveCacheVersionStr = getCacheVersion(cacheVersionUrl)
-        val liveClientVersionStr = getClientVersion(clientVersionUrl)
+        val liveCacheVersionStr = getCacheVersion()
+        val liveClientVersionStr = getClientVersion()
 
         // Convert the string versions to integers if possible
         liveCacheVersionStr?.toIntOrNull()?.let { liveCacheVersion = it }
@@ -143,12 +143,12 @@ class VersionChecker {
     }
 
 
-    private fun getCacheVersion(url: String): String? {
-        return retrieveVersion(url)
+    private fun getCacheVersion(): String? {
+        return retrieveVersion(cacheVersionUrl)
     }
 
-    private fun getClientVersion(url: String): String? {
-        return retrieveVersion(url)
+    private fun getClientVersion(): String? {
+        return retrieveVersion(clientVersionUrl)
     }
 
     /**
@@ -250,14 +250,14 @@ class VersionChecker {
     }
 
     private fun isFileInUse(file: Path): Boolean {
-        try {
+        return try {
             // Attempt to move the file to a temporary location.
             // If it's in use, an exception will be thrown.
             Files.move(file, file.resolveSibling("tempfile"), StandardCopyOption.REPLACE_EXISTING)
             Files.move(file.resolveSibling("tempfile"), file, StandardCopyOption.REPLACE_EXISTING)
-            return false // The file was not in use
+            false // The file was not in use
         } catch (e: IOException) {
-            return true // The file is in use
+            true // The file is in use
         }
     }
 
