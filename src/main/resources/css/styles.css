@@ -1,0 +1,19 @@
+/* styles.css */
+.root {
+    -fx-background-image: url("/images/background.jpg");
+    -fx-background-size: cover;
+    -fx-fit-width: 50%;
+    -fx-fit-height: 50%;
+    -fx-background-repeat: no-repeat;
+}
+
+.logo {
+    -fx-background-image: url("/images/logo.png");
+    -fx-background-size: contain;
+    -fx-background-repeat: no-repeat;
+}
+
+.half-size-logo {
+    -fx-fit-width: 50%;
+    -fx-fit-height: 50%;
+}
