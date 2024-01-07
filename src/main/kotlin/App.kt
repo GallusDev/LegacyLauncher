@@ -134,14 +134,18 @@ class App : Application(){
         }
 
         // Set actions for buttons (you can implement these functions)
-        launchButton.setOnAction { launchGame(informationPanel) }
-        updateButton.setOnAction { checkForUpdates(progressIndicator, informationPanel) }
+        launchButton.setOnAction {
+            informationPanel.appendText("Launching client...\n")
+            launchGame()
+        }
+        updateButton.setOnAction {
+            informationPanel.appendText("Checking for updates. Please wait...\n")
+            checkForUpdates(progressIndicator, informationPanel)
+        }
     }
 
     // Implement these functions for button actions
-    private fun launchGame(informationPanel: TextArea) {
-        informationPanel.appendText("Launching client...\n")
-
+    private fun launchGame() {
         // Launch the client and check the return value
         if (!clientLauncher.launchClient()) {
             displayNoClientFiles()
@@ -149,7 +153,6 @@ class App : Application(){
     }
 
     private fun checkForUpdates(progressIndicator: ProgressIndicator, informationPanel: TextArea) {
-        informationPanel.appendText("Checking for updates. Please wait...\n")
         progressIndicator.isVisible = true
         versionChecker.checkGameVersions(progressIndicator, informationPanel)
         progressIndicator.isVisible = false
