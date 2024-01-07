@@ -36,13 +36,8 @@ class FileDownloader {
         val extractionSuccessful = extractZipFile(zipFile, destinationDir)
 
         if (!extractionSuccessful) {
-            Platform.runLater {
-                val alert = Alert(Alert.AlertType.INFORMATION)
-                alert.title = "Error Updating Files"
-                alert.headerText = "This is the header text"
-                alert.contentText = "This is the content text"
-                alert.showAndWait()
-            }
+            extractionFailed()
+            return
         }
     }
 
@@ -55,13 +50,8 @@ class FileDownloader {
         val extractionSuccessful = extractZipFile(zipFile, destinationDir)
 
         if (!extractionSuccessful) {
-            Platform.runLater {
-                val alert = Alert(Alert.AlertType.INFORMATION)
-                alert.title = "Error Updating Files"
-                alert.headerText = "This is the header text"
-                alert.contentText = "This is the content text"
-                alert.showAndWait()
-            }
+            extractionFailed()
+            return
         }
     }
 
@@ -195,5 +185,13 @@ class FileDownloader {
 
         // Return true to indicate successful extraction
         return true
+    }
+
+    private fun extractionFailed() {
+        val alert = Alert(Alert.AlertType.ERROR)
+        alert.title = "Error!"
+        alert.headerText = "File extraction failed."
+        alert.contentText = "Please contact an admin regarding ths issue."
+        alert.showAndWait()
     }
 }

@@ -1,5 +1,6 @@
 import java.io.File
 import java.io.IOException
+import kotlin.system.exitProcess
 
 class ClientLaunch {
 
@@ -25,6 +26,7 @@ class ClientLaunch {
 
             // Check if the process started successfully
             process.isAlive
+            exitProcess(0)
         } catch (e: IOException) {
             e.printStackTrace()
             false
